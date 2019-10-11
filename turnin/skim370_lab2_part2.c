@@ -14,19 +14,21 @@
 
 int main(void) {
 	DDRA = 0x00;	PORTA = 0xFF;
-	DDRB = 0xFF;	PORTB = 0x00;
+	DDRC= 0xFF;	PORTC = 0x00;
 	unsigned char tempA = 0x00;
-	unsigned char tempB = 0x00;	
+	unsigned char maskA = 0x00;	
+	unsigned char count = 0x00;
+	unsigned char i = 0;
     while (1) {
 	tempA = PINA;
-	if(tempA == 0x01){
-		tempB = 0x01;
+	for(i =0; i < 4; ++i){
+		maskA = tempA;
+		if((maskA >> i) & 0x01){
+			++count;
+		 }
 	}
-	else{
-		tempB = 0x00;
-	}
-	PORTB = tempB;
-	tempB = 0x00;
+	PORTC = count;
+	count = 0;
     }
     return 1;
 }
